@@ -14,7 +14,7 @@ export IGNITION_COMMON3_DIR=/usr/local/lib64/cmake/ignition-common3
 source ~/.bashrc
 
 # Navigate to the Gazebo source directory
-cd /home/yuyu/gazebo-classic
+cd /home/yuyu/gazebo-classic/build
 
 # Remove previous CMake cache and build files
 rm -rf CMakeCache.txt CMakeFiles
