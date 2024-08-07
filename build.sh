@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# Set environment variables for Ignition Common3
-export CMAKE_PREFIX_PATH=/usr/local/lib64/cmake:$CMAKE_PREFIX_PATH
+# Ensure previous environment variables are unset to avoid conflicts
+unset IGNITION_COMMON3_INCLUDE_DIR
+unset IGNITION_COMMON3_LIBRARY
+unset IGNITION_COMMON3_DIR
+
+# Set environment variables for QWT
 export QWT_ROOT_DIR=/usr/local/qwt-6.1.6
 export QWT_INCLUDE_DIR=/usr/local/qwt-6.1.6/include
 export QWT_LIBRARY_DIR=/usr/local/qwt-6.1.6/lib
@@ -14,11 +18,11 @@ source ~/.bashrc
 cd /home/yuyu/gz-common/build
 
 # Run make install and capture the output
-INSTALL_LOG=$(sudo make install)
+INSTALL_LOG=$(sudo make install 2>&1)
 
 # Extract the installation paths
-INCLUDE_PATH=$(echo "$INSTALL_LOG" | grep -oP '(?<=-- Up-to-date: ).*(?=/include)')
-LIB_PATH=$(echo "$INSTALL_LOG" | grep -oP '(?<=-- Up-to-date: ).*(?=/lib64)')
+INCLUDE_PATH=$(echo "$INSTALL_LOG" | grep -oP '(?<=-- Up-to-date: ).*(?=/include)' | head -n 1)
+LIB_PATH=$(echo "$INSTALL_LOG" | grep -oP '(?<=-- Up-to-date: ).*(?=/lib64)' | head -n 1)
 
 # Set the extracted paths as environment variables
 export IGNITION_COMMON3_INCLUDE_DIR="$INCLUDE_PATH/include/ignition/common3"
